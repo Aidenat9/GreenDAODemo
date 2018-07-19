@@ -1,5 +1,4 @@
 *.iml
-.gradle
 /local.properties
 /.idea/libraries
 .DS_Store
@@ -22,11 +21,9 @@
 */out/
 
 # Gradle files
-.gradle/
 build/
 */build/
-gradlew
-gradlew.bat
+
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -50,7 +47,6 @@ captures/
 # Keystore files
 #*.jks
 #gradle wrapper
-gradle/
 
 #some local files
 */.settings/
