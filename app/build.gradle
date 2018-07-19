@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.tmgg.greendao"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    //greendao配置
+    greendao {
+        //版本号，升级时可配置
+        schemaVersion 1
+        daoPackage 'com.tmgg.greendao.gen'//这个是生成代码保存的包名
+        targetGenDir 'E:\\GreenDaoApp\\app\\src\\main\\java'//保存到java代码路径
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    // add library
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:multidex:1.0.3'
+    // This is only needed if you want to use encrypted databases
+//    implementation 'net.zetetic:android-database-sqlcipher:3.5.6'
+}
