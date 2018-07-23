@@ -17,14 +17,12 @@ import com.tmgg.greendao.R;
 import com.tmgg.greendao.app.MyApp;
 import com.tmgg.greendao.bean.Note;
 import com.tmgg.greendao.bean.User;
-import com.tmgg.greendao.gen.DaoSession;
 import com.tmgg.greendao.gen.NoteDao;
 import com.tmgg.greendao.gen.UserDao;
 
 import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -61,9 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+        //初始化数据库
+        userDao = MyApp.getInstances().getDaoSession().getUserDao();
+        noteDao = MyApp.getInstances().getDaoSession().getNoteDao();
         initView();
         initRecyclerView();
-        initDaoMaster();
     }
 
     private void initRecyclerView() {
@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 holder.tvUserName.setText("" + user.getName());
                 holder.tvSex.setText("" + user.getSex());
                 holder.tvAge.setText("" + user.getAge());
-                holder.tvSalary.setText("" + user.getSalary());
+                holder.tvSalary.setText("" + user.getSalary()+"num:"+user.getNum());
+//                holder.tvSalary.setText("" + user.getSalary()+"num:");
                 StringBuilder sbContent = new StringBuilder();
                 StringBuilder sbId = new StringBuilder();
                 StringBuilder sbCustomId = new StringBuilder();
@@ -143,11 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initDaoMaster() {
-        DaoSession daoSession = MyApp.getDaoSession();
-        userDao = daoSession.getUserDao();
-        noteDao = daoSession.getNoteDao();
-    }
 
     private void initView() {
         mBtnMainAdd = (Button) findViewById(R.id.btn_main_add);
@@ -233,12 +229,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 for (int i = 0,len = 1000; i <len ; i++) {
                     User user = null;
+                    user = new User();
                     if(i%2==0){
-                        user = new User(null, "张三" + Calendar.MILLISECOND, "男", 19, i);
+                        user.setName("张三");
+                        user.setSex("男");
+                        user.setAge(19);
                     }else{
-                        user = new User(null, "莉莉" + Calendar.MILLISECOND, "女", 16, i);
+                        user.setName("李四");
+                        user.setSex("女");
+                        user.setAge(21);
                     }
-
+                    user.setNum(String.valueOf(i));
+                    user.setSalary(i);
                     long insertId = userDao.insert(user);
                     //返回当前的id ,作为note的外键
                     addNotes(insertId,i);
@@ -247,8 +249,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             private void addNotes(long insertId,int position) {
-                Note note1 = new Note(null, "content" + position, "" + Calendar.MINUTE, "" + Calendar.MINUTE, insertId);
-                Note note2 = new Note(null, "内容" + position, "" + Calendar.MINUTE, "" + Calendar.MINUTE, insertId);
+                Note note1 = new Note();
+                note1.setCustomId(insertId);
+                note1.setContent("1内"+position);
+                Note note2 = new Note();
+                note2.setCustomId(insertId);
+                note2.setContent("2容"+position);
                 noteDao.insert(note1);
                 noteDao.insert(note2);
             }

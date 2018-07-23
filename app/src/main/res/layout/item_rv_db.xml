@@ -40,19 +40,19 @@
 
             <TextView
                 android:id="@+id/tv_item_sex"
-                android:layout_width="60dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:text="性别" />
 
             <TextView
                 android:id="@+id/tv_item_age"
-                android:layout_width="60dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:text="年龄" />
 
             <TextView
                 android:id="@+id/tv_item_salary"
-                android:layout_width="80dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="薪水" />
         </LinearLayout>

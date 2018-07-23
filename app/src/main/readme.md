@@ -1,3 +1,6 @@
+
+###提示： 数据库升级时的字段不要使用int，尽量使用string ，MigrationHelper帮助类的bug，int不能为空，否则报错。
+
 ```
 @Entity 用于标识这是一个需要Greendao帮我们生成代码的bean
 
